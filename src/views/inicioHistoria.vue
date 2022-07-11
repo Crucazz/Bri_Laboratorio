@@ -6,6 +6,9 @@
       align="center"
       justify="center"
     >
+
+
+
       <v-col cols="2"
           sm="2" >
           <div  @click="toInicio"  class=" mx-auto text-center secondary text-no-wrap rounded-xl">
@@ -95,6 +98,7 @@
       align="center"
       justify="center"
     >
+    <p> {{prueba}} </p>
 
 
 
@@ -196,12 +200,19 @@
         },
       ],
       curso: null,
+      prueba:{},
     }),
     methods:{
         //Función asíncrona para consultar los datos
         getData: async function(){
-          this.curso = document.URL.split("/")[4]; 
-        },
+          try {
+              var result = await this.$http.get('/info');
+              this.prueba = result;
+                
+            } catch (error) {
+                console.log('error', error);
+            }
+          },
         toInicio () {
           this.$router.push('/');
         },
