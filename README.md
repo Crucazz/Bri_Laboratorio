@@ -1,7 +1,7 @@
 # Scratch
-Sistema de busqueda de informacion enfocado en escolares de enseñanza basica de Chile, como primera etapa estara destinado a los cursos de Tercer y Cuarto Basico, unicamente las Asignaturas de Matematicas en los topicos de Operaciones basica y Fracciones; a su vez estara la asignatura de Ciencias sociales e historia y geografía, donde los topicos abordados correspoden a Civilizaciones antiguas y Pueblos originarios.
+Sistema de busqueda de informacion enfocado en escolares de enseñanza básica de Chile, como primera etapa estará destinado a los cursos de Tercer y Cuarto Básico, unicamente las Asignaturas de Matemáticas en los tópicos de Operaciones básica y Fracciones; a su vez estará la asignatura de Ciencias sociales e historia y geografía, donde los tópicos abordados correspoden a Civilizaciones antiguas y Pueblos originarios.
 
-Este proyecto se derrolla en el contexto del curso de Busqueda y Recuperacion de informacion de la universidad de Santiago de Chile.
+Este proyecto se derrolla en el contexto del curso de Búsqueda y Recuperación de información de la universidad de Santiago de Chile.
 
 
 ## Project setup
