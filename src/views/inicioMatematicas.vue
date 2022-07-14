@@ -28,7 +28,7 @@
       </v-col>
       <v-col cols="8"
           sm="8" >
-          <div  class=" mx-auto text-center secondary text-no-wrap rounded-xl">
+          <div @click="toInicio" class=" mx-auto text-center secondary text-no-wrap rounded-xl">
             <v-card
             max-width="400"
               class=" mx-auto text-center secondary text-no-wrap rounded-xl"
@@ -96,17 +96,16 @@
       justify="center"
     >
 
-
-
-    <v-container>
+   <v-container v-if="items">
       <v-row dense>
         <v-col
           v-for="(item, i) in items"
           :key="i"
           cols="12"
         >
+        <a :href="item.url[0]">
           <v-card
-          color="#be9220"
+          color="#ffffff"
 
             dark
           >
@@ -116,42 +115,72 @@
                 size="125"
                 tile
               >
-                <v-img :src="item.src"></v-img>
+                <v-img src="https://www.redcenit.com/redcenit/wp-content/uploads/2016/04/mathematics-1044087_1920.jpg"></v-img>
               </v-avatar>
               <div>
                 <v-card-title
                   class="text-h5 "
-                  v-text="item.title"
-                ></v-card-title>
+                > <FONT COLOR="black"> {{item.title[0]}} </FONT></v-card-title>
 
-                <v-card-subtitle >{{item.cuerpo}} <br><br> {{item.link}}</v-card-subtitle>
+                <v-card-subtitle >  <FONT COLOR="black"> {{item.abstract[0]}}<br><br> {{item.url[0]}} </FONT> </v-card-subtitle>
+
+
               
 
                 <v-card-actions>
                   <v-btn
-                    v-if="item.materia == 'si'"
-                    class="ml-2 mt-5"
-                    outlined
-                    rounded
+                    v-if="item.type[0] == 'contenido'"
+                    class="ml-2 mt-5" 
+                    fab
                     small
+                    color="#46eeff"                   
                   >
                     C
                   </v-btn>
 
                   <v-btn
-                    v-if="item.ejercicios == 'si'"
-                    class="ml-2 mt-5"
-                    outlined
-                    rounded
+                    v-if="item.type[0] == 'ejercicio'"
+                    class="ml-2 mt-5"                    
+                    fab
                     small
+                    color="#ff9d46"
                   >
                     E
+                  </v-btn>
+                  <v-btn
+                    v-if="item.type[0]=='fracciones'"
+                    class="ml-2 mt-5"                    
+                    fab
+                    small
+                    color="#ff9d46"
+                  >
+                    E
+                  </v-btn>
+
+                  <v-btn
+                    v-if="item.format == 'video'"
+                    class="ml-2 mt-5"
+                    fab
+                    small
+                    color="#008000"
+                  >
+                    V
+                  </v-btn>
+                  <v-btn
+                    v-if="item.format == 'doc'"
+                    class="ml-2 mt-5"
+                    fab
+                    small
+                    color="#9246ff"
+                  >
+                    D
                   </v-btn>
                 </v-card-actions>
               </div>
              
             </div>
           </v-card>
+          </a>
         </v-col>
       </v-row>
     </v-container>
@@ -169,38 +198,33 @@
   export default {  
     name: 'iniciomatematicas',
     data: () => ({
-      items: [
-        {
-          src: 'https://cdn.vuetifyjs.com/images/cards/foster.jpg',
-          title: 'Suma de fracciones con el mismo denominador',
-          cuerpo: 'Una fraccion es ....',
-          link: 'http://google.com',
-          materia: 'si',
-          ejercicios: 'si'
-        },
-        {
-          src: 'https://cdn.vuetifyjs.com/images/cards/halcyon.png',
-          title: 'Suma y resta de fracciones',
-          cuerpo: '...Hablaremos sobre la suma',
-          link: 'http://google.com',
-          materia: 'si',
-          ejercicios: 'si'
-        },
-        {
-          src: 'https://cdn.vuetifyjs.com/images/cards/halcyon.png',
-          title: 'Suma y resta de fracciones con el mismo denominador',
-          cuerpo: 'Lorence se comio en el almuerzo...',
-          link: 'http://google.com',
-          materia: 'no',
-          ejercicios: 'si'
-        },
-      ],
+      items: null,
       curso: null,
+      prueba:{},
     }),
     methods:{
         //Función asíncrona para consultar los datos
         getData: async function(){
-          this.curso = document.URL.split("/")[4]; 
+          var result=null;
+          this.curso = document.URL.split("/")[4];
+          if(this.curso == "3")
+          {
+              result = await this.$http.get('/matematicaCuarto');
+              this.prueba = result.data.response;
+              this.items = this.prueba.docs;
+          }
+          else
+          {
+            try {
+              result = await this.$http.get('/matematicaCuarto');
+              this.prueba = result.data.response;
+              this.items = this.prueba.docs;
+                
+            } catch (error) {
+                console.log('error', error);
+            }
+          }
+
         },
         toInicio () {
           this.$router.push('/');
@@ -214,7 +238,8 @@
     },
     //Función que se ejecuta al cargar el componente
     created:function(){
-        this.getData();
+      this.curso = document.URL.split("/")[4];
+      this.getData();
     }
   }
 </script>
